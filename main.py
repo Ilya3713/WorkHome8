@@ -1,24 +1,24 @@
 import pprint
-dicts = dict()
 with open('Cook.txt', 'r', encoding='utf8') as f:
-    for line in f:
-        if line.strip() == '':
-            name = f.readline().strip()
-            dicts.setdefault(name, list())
-        else:
-            counts = line.strip()
-            count = 0
-            while count < int(counts):
-                stri = f.readline().strip().split('|')
-                info_cook = {"ingridient_name": stri[0], "quantity": stri[1], "measure": stri[2]}
-                dicts[name].append(info_cook)
-                count += 1
+  dicts = dict()
+  for line in f:
+      if line.strip() == '':
+          name = f.readline().strip()
+          dicts.setdefault(name, list())
+      else:
+          counts = line.strip()
+          count = 0
+          while count < int(counts):
+              stri = f.readline().strip().split('|')
+              info_cook = {"ingridient_name": stri[0], "quantity": stri[1], "measure": stri[2]}
+              dicts[name].append(info_cook)
+              count += 1
 print(dicts)
 
 
 
-cook_dict = dict()
 def get_shop_list_by_dishes(dishes, person_count):
+  cook_dict = dict()
   for cook_name in dishes:
     if cook_name in dicts.keys():
         for items_list in dicts.keys():
@@ -41,12 +41,14 @@ def get_shop_list_by_dishes(dishes, person_count):
   return cook_dict
   
 
+def main():
+  dis = list()
+  count_cook = int(input('\n\n Введите количество вводимых блюд: \n'))
+  person = int(input('Введите количество персон: '))
+  for i in range (count_cook):
+      x=input("Введите наименования блюда: \n")
+      dis.insert(i,x)
+      i+=1
+  pprint.pprint(get_shop_list_by_dishes(dis, person))
 
-dis = list()
-count_cook = int(input('\n\n Введите количество вводимых блюд: \n'))
-person = int(input('Введите количество персон: '))
-for i in range (count_cook):
-    x=input("Введите наименования блюда: \n")
-    dis.insert(i,x)
-    i+=1
-pprint.pprint(get_shop_list_by_dishes(dis, person))
+print(main())
