@@ -1,23 +1,27 @@
 import pprint
-with open('Cook.txt', 'r', encoding='utf8') as f:
-  dicts = dict()
-  for line in f:
-      if line.strip() == '':
-          name = f.readline().strip()
-          dicts.setdefault(name, list())
-      else:
-          counts = line.strip()
-          count = 0
-          while count < int(counts):
-              stri = f.readline().strip().split('|')
-              info_cook = {"ingridient_name": stri[0], "quantity": stri[1], "measure": stri[2]}
-              dicts[name].append(info_cook)
-              count += 1
-print(dicts)
 
+def OpenFile():
+
+  with open('Cook.txt', 'r', encoding='utf8') as f:
+    dicts = dict()
+    for line in f:
+        if line.strip() == '':
+            name = f.readline().strip()
+            dicts.setdefault(name, list())
+        else:
+            counts = line.strip()
+            count = 0
+            while count < int(counts):
+                stri = f.readline().strip().split('|')
+                info_cook = {"ingridient_name": stri[0], "quantity": stri[1], "measure": stri[2]}
+                dicts[name].append(info_cook)
+                count += 1
+  print('1 задание: \n',dicts, '\n')
+  return dicts
 
 
 def get_shop_list_by_dishes(dishes, person_count):
+  dicts = OpenFile()
   cook_dict = dict()
   for cook_name in dishes:
     if cook_name in dicts.keys():
@@ -27,7 +31,7 @@ def get_shop_list_by_dishes(dishes, person_count):
                     for key, value in item.items():
                             if key == 'quantity':
                                 values = int(value)
-                                item[key] = values * 5         
+                                item[key] = values * person_count         
                     for key, value in item.items():
                       if key == 'ingridient_name':
                         name = value
@@ -38,6 +42,7 @@ def get_shop_list_by_dishes(dishes, person_count):
                         cook_dict[name].setdefault(key,value)
     else:
       return('Нет блюда: ' + cook_name)
+  print('2 задание: \n')
   return cook_dict
   
 
@@ -51,4 +56,5 @@ def main():
       i+=1
   pprint.pprint(get_shop_list_by_dishes(dis, person))
 
-print(main())
+
+main()
